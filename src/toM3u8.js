@@ -144,7 +144,7 @@ export const formatVttPlaylist = ({
   }
 
   const m3u8Attributes = {
-    NAME: attributes.id,
+    NAME: attributes.label || attributes.id,
     BANDWIDTH: attributes.bandwidth,
     ['PROGRAM-ID']: 1
   };
@@ -217,11 +217,11 @@ export const organizeAudioPlaylists = (playlists, sidxMapping = {}, isAudioOnly 
 
 export const organizeVttPlaylists = (playlists, sidxMapping = {}) => {
   return playlists.reduce((a, playlist) => {
-    const label = playlist.attributes.lang || 'text';
+    const label = playlist.attributes.label || playlist.attributes.lang || 'text';
 
     if (!a[label]) {
       a[label] = {
-        language: label,
+        language: playlist.attributes.lang,
         default: false,
         autoselect: false,
         playlists: [],
